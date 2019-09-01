@@ -85,10 +85,10 @@ def main():
     elapsed_time = time.time() - start_time
     print("2",time.strftime("%H:%M:%S", time.gmtime(elapsed_time)), "- time for match_freq()")
  
-    # start_time = time.time()
-    # print(middle_school(1221,1234567891011121314151617181920212223242526272829))
-    # elapsed_time = time.time() - start_time
-    # print("3",time.strftime("%H:%M:%S", time.gmtime(elapsed_time)), "- time for match_freq()")
+    start_time = time.time()
+    print(middle_school(1221,1234567891011121314151617181920212223242526272829))
+    elapsed_time = time.time() - start_time
+    print("3",time.strftime("%H:%M:%S", time.gmtime(elapsed_time)), "- time for match_freq()")
  
     print("fin")
 
