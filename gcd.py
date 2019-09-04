@@ -1,7 +1,64 @@
-# chap 1.1
+# chap 1.1 - 2.4
 # Sep 1, 19
 import math
 import time, tqdm
+
+
+def UniqueElements(A):
+    # UniqueElements(A[0..n − 1])
+    # //Determines whether all the elements in a given array are distinct
+    # //Input: An array A[0..n − 1]
+    # //Output: Returns “true” if all the elements in A are distinct // and “false” otherwise
+    # for i ← 0 to n − 2 do
+    # for j ← i + 1 to n − 1 do
+    # if A[i ] = A[j ] return false
+    # return true
+    pass
+
+def MaxElement(A):
+    # ALGORITHM MaxElement(A[0..n − 1])
+    # //Determines the value of the largest element in a given array
+    # //Input: An array A[0..n − 1] of real numbers //Output: The value of the largest element in A maxval ← A[0]
+    # for i ← 1 to n − 1 do
+    # if A[i] > maxval maxval ← A[i]
+    # return maxval
+    maxval = A[0]
+    for i in range(len(A)):
+        if A[i] > maxval:
+            maxval = A[i]
+        return maxval
+
+def SequentialSearch(A, k):
+    # SequentialSearch(A[0..n − 1], K)
+    # //Searches for a given value in a given array by sequential search
+    # //Input: An array A[0..n − 1] and a search key K
+    # //Output: The index of the first element in A that matches K // or −1 if there are no matching elements
+    # i←0
+    # while i < n and A[i] ̸= K do
+    # i←i+1 if i < n return i
+    # else return −1
+    i = 0
+    n = len(A)
+    while i<n and A[i] != k:
+        i += 1
+    if i<n:
+        return i
+    else:
+        return -1
+
+def ComparisonCountingSort(l):
+    '''
+    //Sorts an array by comparison counting
+    //Input: Array A[0..n − 1] of orderable values //Output: Array S[0..n − 1] of A’s elements sorted // in nondecreasing order
+    for i ← 0 to n − 1 do
+    Count[i]←0 for i ← 0 to n − 2 do
+    for j ← i + 1 to n − 1 do if A[i ] < A[j ]
+    Count[j]←Count[j]+1 else Count[i] ← Count[i] + 1
+    for i ← 0 to n − 1 do S[Count[i]]←A[i]
+    return S
+    '''
+    pass
+
 
 def euclid(m,n):
     #Computes gcd(m, n) by Euclid’s algorithm
