@@ -3,6 +3,24 @@
 import math
 import time, tqdm
 
+def power2(n):
+    #recursion
+    print(n)
+    if n == 0:
+        return 1
+    else:
+        return power2(n-1)+power2(n-1)
+
+def factorial(n):
+    # ALGORITHM F(n) //Computes n! recursively
+    # //Input: A nonnegative integer n //Output: The value of n!
+    # if n = 0 return 1
+    # else return F (n − 1) ∗ n
+    print(n)
+    if n == 0:
+        return 1
+    else:
+        return factorial(n-1) * n
 
 def UniqueElements(A):
     # UniqueElements(A[0..n − 1])
@@ -132,21 +150,21 @@ def primeFactors(n):
     return out
 
 def main():
-    start_time = time.time()
-    print(euclid(0,12))
-    elapsed_time = time.time() - start_time
-    print("1", time.strftime("%H:%M:%S", time.gmtime(elapsed_time)), "- time for match_freq()")
+    # start_time = time.time()
+    # print(euclid(0,12))
+    # elapsed_time = time.time() - start_time
+    # print("1", time.strftime("%H:%M:%S", time.gmtime(elapsed_time)), "- time for match_freq()")
     
-    start_time = time.time()
-    print(consecutive_check(12,0))
-    elapsed_time = time.time() - start_time
-    print("2",time.strftime("%H:%M:%S", time.gmtime(elapsed_time)), "- time for match_freq()")
+    # start_time = time.time()
+    # print(consecutive_check(12,0))
+    # elapsed_time = time.time() - start_time
+    # print("2",time.strftime("%H:%M:%S", time.gmtime(elapsed_time)), "- time for match_freq()")
  
-    start_time = time.time()
-    print(middle_school(1221,1234567891011121314151617181920212223242526272829))
-    elapsed_time = time.time() - start_time
-    print("3",time.strftime("%H:%M:%S", time.gmtime(elapsed_time)), "- time for match_freq()")
- 
+    # start_time = time.time()
+    # print(middle_school(1221,1234567891011121314151617181920212223242526272829))
+    # elapsed_time = time.time() - start_time
+    # print("3",time.strftime("%H:%M:%S", time.gmtime(elapsed_time)), "- time for match_freq()")
+    print(power2(2))
     print("fin")
 
 main()
