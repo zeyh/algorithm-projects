@@ -46,23 +46,6 @@ def MaxElement(A):
             maxval = A[i]
         return maxval
 
-def SequentialSearch(A, k):
-    # SequentialSearch(A[0..n − 1], K)
-    # //Searches for a given value in a given array by sequential search
-    # //Input: An array A[0..n − 1] and a search key K
-    # //Output: The index of the first element in A that matches K // or −1 if there are no matching elements
-    # i←0
-    # while i < n and A[i] ̸= K do
-    # i←i+1 if i < n return i
-    # else return −1
-    i = 0
-    n = len(A)
-    while i<n and A[i] != k:
-        i += 1
-    if i<n:
-        return i
-    else:
-        return -1
 
 def ComparisonCountingSort(l):
     '''
