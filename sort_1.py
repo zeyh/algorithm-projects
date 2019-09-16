@@ -5,6 +5,22 @@ sep 10
 import numpy as np
 import random
 
+
+def BruteForceClosestPair(P):
+    # //Finds distance between two closest points in the plane by brute force
+    # //Input:AlistP ofn(n≥2)pointsp1(x1,y1),...,pn(xn,yn) //Output: The distance between the closest pair of points d←∞
+    # for i ← 1 to n − 1 do
+    # for j ← i + 1 to n do
+    # d ← min(d, sqrt((xi − xj )2 + (yi − yj )2)) //sqrt is square root
+    # return d
+    # TODO: 
+    for i in range(len(P)):
+        for j in range(i+1, len(P))+1:
+            # d = min(d, sqrt(x[i] - x[j])**2 + (y[i] - y[j])**2)
+            pass
+
+
+
 def BruteForceStringMatch(T, P):
     # //Implements brute-force string matching
     # //Input: An array T [0..n − 1] of n characters representing a text and // an array P [0..m − 1] of m characters representing a pattern //Output: The index of the first character in the text that starts a
@@ -13,7 +29,8 @@ def BruteForceStringMatch(T, P):
     # while j < m and P [j ] = T [i + j ] do
     # j←j+1 ifj =mreturni
     # return −1
-    print(n,m)
+    n = len(T)
+    m = len(P)
     for i in range(0, n-m):
         j = 0
         while j <m and P[j] == T[i+j]:
@@ -106,17 +123,27 @@ def selectionSort(A):
     print("-------")
     print(A)
 
+def mult(m,n):
+    # wtite a integer multiplication using recursion
+    # m               if n=1
+    # m + mult(m,n-1) if n>1
+
+    if n==1:
+        return m
+    elif n>1:
+        return m+mult(m,n-1)
 
 
 def main():
     arr = [ round(random.uniform(0, 100)) for i in range(10)]
-    print(BruteForceStringMatch("fdksljfsklasdnvdnkjfh","asd"))
     print(arr)
+    print(mult(4,3))
+    # print(BruteForceStringMatch("fdksljfsklasdnvdnkjfh","asd"))
     # arr = [5,2,3,1,4]
     # selectionSort(arr)
     # bubbleSort(arr)
-    print(SequentialSearch(arr, 2))
-    print(SequentialSearch2(arr,2))
+    # print(SequentialSearch(arr, 2))
+    # print(SequentialSearch2(arr,2))
     print("fin")
 
 main()
