@@ -131,13 +131,40 @@ def mult(m,n):
     if n==1:
         return m
     elif n>1:
+        print(m,n)
         return m+mult(m,n-1)
 
 
+def powerSet(str1, index, curr): 
+    n = len(str1) 
+  
+    # base case 
+    if (index == n): 
+        return
+    # First print current subset 
+    # print(curr) 
+    print(n)
+  
+    # Try appending remaining characters 
+    # to current subset 
+    for i in range(index + 1, n): 
+        curr += str1[i] 
+        powerSet(str1, i, curr) 
+        # Once all subsets beginning with 
+        # initial "curr" are printed, remove 
+        # last character to consider a different 
+        # prefix of subsets. 
+        curr = curr.replace(curr[len(curr) - 1], "") 
+  
+    return
+
+
 def main():
-    arr = [ round(random.uniform(0, 100)) for i in range(10)]
+    arr = [ round(random.uniform(0, 10)) for i in range(10)]
     print(arr)
-    print(mult(4,3))
+    arr = "abc"
+    powerSet(arr,0,"a")
+    # print(mult(4,3))
     # print(BruteForceStringMatch("fdksljfsklasdnvdnkjfh","asd"))
     # arr = [5,2,3,1,4]
     # selectionSort(arr)
