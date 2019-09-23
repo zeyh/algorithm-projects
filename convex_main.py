@@ -9,10 +9,11 @@ different trails in brute force of convex problem
 from convex_func import *
 
 
-
 def getConvexHull():
-    # returns the list (without duplicates) of points in the convex hull – calls checkLineSegment()
-    # order of the points in the convex hull is not important
+    '''
+    @return: a list (without duplicates) of points in the convex hull – calls checkLineSegment()
+    order of the points in the convex hull is not important
+    '''
     out = []
     for i in tqdm(range(len(points))):
         for j in range(i,len(points)):
@@ -25,9 +26,11 @@ def getConvexHull():
 
 
 def checkLineSegment(index1,index2):
-    # the parameters are indices of two points in the list of points.  They are distinct
-    # returns True or False depending on whether the remaining points all lie on one side of the
-    # line through the two points;  Increments the global count for each point tested
+    '''
+    @param: index1, index2 distinct integers that are indices of two points in the list of points.
+    @return: True or False depending on whether the remaining points all lie on one side of the
+    line through the two points;  Increments the global count for each point tested
+    '''
     a,b,c = findLine(index1,index2)
     #*-1 because findLine() returns the form of ax + by = c, but checked using y = -a/bx + c/b (b=1)   
     result1 = []
@@ -48,10 +51,11 @@ def checkLineSegment(index1,index2):
 
 
 def findLine(index1, index2):
-    # the parameters are indices of two points in the list of points.  They are distinct
-    # returns three values:  a,b,c  which are the constants in the line ax + by = c  which is the line through
-    # these two points
-    # return a line that pass those two indices of points
+    '''
+    @param: index1, index2 distinct integers that are indices of two points in the list of points.
+    @return:  a,b,c  which are the constants in the line ax + by = c  which is the line through these two points
+    return a line that pass those two indices of points
+    '''
     pt1 = points[index1] #get the points
     pt2 = points[index2]
     a = (pt1[1] - pt2[1])/(pt1[0] - pt2[0]) # according to the line equation y = ax + c
@@ -62,19 +66,21 @@ def findLine(index1, index2):
 
 
 def main():
-    
-    createData(10)
+    createData(10) #creates the data witg=h specific number
     global points, count 
     points = getData().tolist() # a list of the ordered pairs of the points
     count = 0 # the total number of points that are tested
-    
+
     print(points)
-    # checkLineSegment(2,6)
-    result = getConvexHull()
+    result = getConvexHull() 
+
+    #plot the graphs
     plot_convex(result)
     scatterplot(points)
-    plt.show()
+    plt.show() 
+
     print("fin")
     
 
-main()
+if __name__ == '__main__':
+    main()
