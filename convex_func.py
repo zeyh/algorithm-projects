@@ -28,7 +28,7 @@ def plot_convex(arr):
     x = arr[:,0] #get the first and second column seperatively
     y = arr[:,1]
     for i in range(0, len(x), 2): #plot every pair of points in the array
-        plt.plot(x[i:i+2], y[i:i+2], 'bo-')
+        plt.plot(x[i:i+2], y[i:i+2], 'bo--')
 
 def getData():
     '''
@@ -124,12 +124,18 @@ def createData(n):
     return arr
 
 def plot_results():
+    '''
+    plot the result's trend lines and compare to see if its O(n^3)
+    '''
     #dont want to run the whole process again so just pasting the terminal output here directly...
     a_5 = [26, 26, 27, 27, 25, 27, 27, 27, 25, 26, 25, 26, 27, 27, 27, 26, 26, 25, 25, 24]
     a_10 = [191, 169, 193, 176, 175, 206, 185, 149, 166, 199, 167, 156, 185, 193, 205, 188, 203, 179, 181, 176]
     a_20 = [807, 714, 910, 823, 861, 1098, 1025, 930, 724, 971, 834, 663, 775, 908, 1082, 950, 1008, 895, 743, 1105]
     a_40 = [3771, 4838, 5370, 3225, 4834, 3402, 3601, 3923, 4929, 3981, 3959, 3170, 3526, 4500, 4036, 4061, 4790, 3972, 4250, 4135]
     a_80 = [16512, 14982, 23892, 13341, 19379, 15445, 14981, 14778, 13921, 15792, 14949, 16311, 15316, 25922, 15988, 21935, 16734, 17693, 19431, 19435]
+
+
+    # fig, ax = plt.subplots()
 
     data_num = np.array([5,10,20,40,80])
     #create the first column of total number of points for the 20 trails
@@ -141,11 +147,42 @@ def plot_results():
     scatterplot(table)
 
     mean = [27, 182, 891, 4114, 17337]
-    plt.scatter(data_num, mean, s=10, c="r") 
-    plt.plot(data_num, mean, '-ro')
+    plt.scatter(data_num, mean, s=10, c="r", label="Average Count") 
+    plt.plot(data_num, mean, '-ro', label= "Actual Points")
     plt.xlabel('total num of points')
     plt.ylabel('num of times checking')
-    plt.legend(["average count","actual counts"])
+    
+
+    # create 1000 equally spaced points between -10 and 10
+    x = np.linspace(0, 80, 1000)
+    y = x**2
+    z = x**3
+    k = x*np.log(x)
+    actual = [30, 360, 3420, 29640, 246480]
+    # fig, ax = plt.subplots()
+    plt.plot(x, y, "y", label="O(n^2)", linestyle="--")
+    plt.plot(x, z, "y", label="O(n^3)",linestyle=":")
+    plt.plot(x, k, "y", label="O(nlogn)",linestyle="-.")
+    plt.plot(data_num, actual, "bo-", label="Worst Case")
+
+    plt.legend(["Average Case","O(nlogn)","O(n^3)" ,"O(n^2)","Worst Case","Actual Points"])
+
+def worst_case_plot(data_num):
+    # data_num = 20
+    out = []
+    angle = [random.uniform(0,1)*(np.pi*2) for i in range(data_num)]
+    x = [ (np.cos(angle[i])+1)*PLANE_SIZE/2 for i in range(data_num)]
+    y = [ (np.sin(angle[i])+1)*PLANE_SIZE/2 for i in range(data_num)]
+    x = np.asarray(x).astype(int)
+    y = np.asarray(y).astype(int)
+    # plt.scatter(x.T, y, s=10) 
+    out = np.stack((x, y), axis=-1)
+    print(out)
+    return out.tolist()
+
+
+
+
 
 
 

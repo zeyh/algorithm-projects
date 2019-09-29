@@ -109,10 +109,29 @@ def main():
         #if check all the points it is: n * (n-1) * (1/2) * (n-3) # num of points * num of lines * 1/repeated counts * num of rest points
         print("overall count of checking: ", int(input_num*(input_num-1)*(input_num-2)/2)) 
         print("optimized count of checking mean: ", np.mean(count_list), "sd: ", np.std(count_list))
-        
-    # plot_results()
+    
+    # #single trail
+    # global points, count 
+    # count = 0 
+    # data_num = 20
+    # createData(data_num)
+    # points = getData().tolist()
+    # result = getConvexHull() # run the core algorithm
+    # #plot the graphs
+    # plot_graphs(result)
 
-    plt.show()
+    # #single trail worst case 
+    # global points, count 
+    # count = 0 
+    # data_num = 20
+    # points = worst_case_plot(20)
+    # result = getConvexHull() # run the core algorithm
+    # #plot the graphs
+    # plot_graphs(result)
+    # print(count)
+
+    # plot_results()
+    # plt.show()
     print("fin")
     
 
