@@ -5,7 +5,7 @@ from tqdm import tqdm
 import random
 import os
 
-PLANE_SIZE = 100 #the max value that a random point would be
+PLANE_SIZE = 1000 #the max value that a random point would be
 # global points = []
 # global count = 0
 
@@ -27,7 +27,6 @@ def plot_convex(arr):
     arr = np.concatenate(arr) #stacked into numpy matrix
     x = arr[:,0] #get the first and second column seperatively
     y = arr[:,1]
-    rgb = random_color()
     for i in range(0, len(x), 2): #plot every pair of points in the array
         plt.plot(x[i:i+2], y[i:i+2], 'bo-')
 
@@ -38,15 +37,6 @@ def getData():
     '''
     arr = np.loadtxt('data.txt')
     return arr
-
-def random_color():
-    '''
-    @return: a tuple of generated rgb values
-    generate random numbers between 0-255 for ploting
-    '''
-    rgbl=[255,0,0]
-    random.shuffle(rgbl)
-    return tuple(rgbl)
 
 def plot_line_eqation(a,c):
     '''
@@ -65,7 +55,6 @@ def plot_line(pt1,pt2):
     '''
     x = [pt1[0], pt2[0]] #get the position value
     y = [pt1[1], pt2[1]]
-    rgb = random_color()
     for i in range(0, len(x), 2): #plot the line with red dot
         plt.plot(x[i:i+2], y[i:i+2], 'ro-')
 
@@ -134,8 +123,29 @@ def createData(n):
             np.savetxt('data'+name+'.txt', arr,header=str(n),fmt='%d')
     return arr
 
+def plot_results():
+    #dont want to run the whole process again so just pasting the terminal output here directly...
+    a_5 = [26, 26, 27, 27, 25, 27, 27, 27, 25, 26, 25, 26, 27, 27, 27, 26, 26, 25, 25, 24]
+    a_10 = [191, 169, 193, 176, 175, 206, 185, 149, 166, 199, 167, 156, 185, 193, 205, 188, 203, 179, 181, 176]
+    a_20 = [807, 714, 910, 823, 861, 1098, 1025, 930, 724, 971, 834, 663, 775, 908, 1082, 950, 1008, 895, 743, 1105]
+    a_40 = [3771, 4838, 5370, 3225, 4834, 3402, 3601, 3923, 4929, 3981, 3959, 3170, 3526, 4500, 4036, 4061, 4790, 3972, 4250, 4135]
+    a_80 = [16512, 14982, 23892, 13341, 19379, 15445, 14981, 14778, 13921, 15792, 14949, 16311, 15316, 25922, 15988, 21935, 16734, 17693, 19431, 19435]
 
+    data_num = np.array([5,10,20,40,80])
+    #create the first column of total number of points for the 20 trails
+    x_col = np.repeat(data_num, 20)
+    #concat the results together
+    y_col = np.concatenate((a_5, a_10,a_20,a_40,a_80))
+    #stack the two column together to plot
+    table = np.stack((x_col, y_col), axis=-1)
+    scatterplot(table)
 
+    mean = [27, 182, 891, 4114, 17337]
+    plt.scatter(data_num, mean, s=10, c="r") 
+    plt.plot(data_num, mean, '-ro')
+    plt.xlabel('total num of points')
+    plt.ylabel('num of times checking')
+    plt.legend(["average count","actual counts"])
 
 
 
