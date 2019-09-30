@@ -5,6 +5,43 @@ sep 10
 import numpy as np
 import random
 
+def qsort(arr):
+  if len(arr) < 2:
+    return arr
+  else:
+    pivot = arr[0]
+    less = [i for i in arr[1:] if i<=pivot]
+    greater = [i for i in arr[1:] if i>pivot]
+    return qsort(less) + [pivot] + qsort(greater)
+
+def qselect(a, k):
+    l = 0
+    r = len(a)-1
+    #return the smallest element
+    s = qsort_lomuto(a)
+    if s == k-1:
+        return a[s]
+    elif s > l+k-1:
+        qselect(a,k)
+    else:
+        qselect(a[s+1:r], k-1-s)
+
+def qsort_lomuto(a):
+    l = 0
+    r = len(a)-1
+    p = a[l]
+    s = l
+    for i in range(l+1, r):
+        if a[i] < p:
+            s+= 1
+            tmp = a[s]
+            a[s] = a[i]
+            a[i] = tmp
+    tmp2 = a[l]
+    a[l] = a[s]
+    a[s] = tmp2
+    print(a)
+    return s
 
 def BruteForceClosestPair(P):
     # //Finds distance between two closest points in the plane by brute force
@@ -18,6 +55,14 @@ def BruteForceClosestPair(P):
         for j in range(i+1, len(P))+1:
             # d = min(d, sqrt(x[i] - x[j])**2 + (y[i] - y[j])**2)
             pass
+
+def hw4(n):
+    if n==1:
+        print("All")
+    else:
+        print("Going")
+        hw4(n/2)
+        hw4(n/2)
 
 
 
@@ -163,7 +208,9 @@ def main():
     arr = [ round(random.uniform(0, 10)) for i in range(10)]
     print(arr)
     arr = "abc"
-    powerSet(arr,0,"a")
+    # print(qselect([5,2,1,3],2))
+    # print(qsort_lomuto([5,2,1,3]))
+    # powerSet(arr,0,"a")
     # print(mult(4,3))
     # print(BruteForceStringMatch("fdksljfsklasdnvdnkjfh","asd"))
     # arr = [5,2,3,1,4]
@@ -171,6 +218,8 @@ def main():
     # bubbleSort(arr)
     # print(SequentialSearch(arr, 2))
     # print(SequentialSearch2(arr,2))
+
+    hw4(8)
     print("fin")
 
 main()
