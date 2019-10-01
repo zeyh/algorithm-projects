@@ -1,13 +1,21 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import animation
-from tqdm import tqdm
+'''
+zeyang huang
+csc370 algorithm
+project 1
+sep 19. 2019
+
+helper functions for convex_main.py to generate data and plot
+dependencies: pip3 install numpy, scipy, matplotlib,tqdm
+'''
+import numpy as np #for data processing
+import matplotlib.pyplot as plt #for plotting 
+from matplotlib import animation #for plotting animations
+from scipy.optimize import curve_fit #for fit a trendline
+from tqdm import tqdm #for time progress bar
+import os #for checking duplicated files
 import random
-import os
 
 PLANE_SIZE = 1000 #the max value that a random point would be
-# global points = []
-# global count = 0
 
 def scatterplot(points):
     '''
@@ -112,9 +120,10 @@ def createData(n):
     arr = np.random.choice(range(PLANE_SIZE), n*2, replace=False)
     arr = arr.reshape(n,2) #change the dimension
     arr = arr.astype(int)
+
+    #handle with duplicated files
     if os.path.exists('data.txt'):
-        #deal with duplicated files
-        # replace = input('data.txt already exists, do you want to replace it? (y/n):  ')
+        # replace = input('data.txt already exists, do you want to replace it? (y/n):  ') #commented for debug and multiple runs
         replace = 'y' 
         if (replace == 'y'):
             np.savetxt('data.txt', arr,header=str(n),fmt='%d')
@@ -122,6 +131,12 @@ def createData(n):
             name = browsefolder_newname("./",'data',"txt") #./ indicates to browse the all files under current directory
             np.savetxt('data'+name+'.txt', arr,header=str(n),fmt='%d')
     return arr
+
+def func(x, a, b, c):
+    '''
+    helper function for plotting trendlines
+    '''
+    return a + b * x + c * x ** 2 
 
 def plot_results():
     '''
@@ -148,10 +163,18 @@ def plot_results():
 
     mean = [27, 182, 891, 4114, 17337]
     plt.scatter(data_num, mean, s=10, c="r", label="Average Count") 
-    plt.plot(data_num, mean, '-ro', label= "Actual Points")
+    plt.plot(data_num, mean, 'ro', label= "Actual Points")
     plt.xlabel('total num of points')
     plt.ylabel('num of times checking')
-    
+
+    #plot the trendline
+    popt, _ = curve_fit(func, data_num, mean) #plot the trendline
+    x_trend = np.linspace(0, 90, 1000)
+    y_pred = [popt[0] + x1*(popt[1]) + x1**2*(popt[2])   for x1 in x_trend]
+    y_pred = np.asarray(y_pred)
+    plt.plot(x_trend, y_pred, color='g',label="Trendline")
+    print(str(popt[0])+str(popt[1])+"x+"+str(popt[0])+"x^2")
+    plt.legend(["Average Case", "Trendline","Actual Points"])
 
     # create 1000 equally spaced points between -10 and 10
     x = np.linspace(0, 80, 1000)
@@ -167,7 +190,10 @@ def plot_results():
 
     plt.legend(["Average Case","O(nlogn)","O(n^3)" ,"O(n^2)","Worst Case","Actual Points"])
 
-def worst_case_plot(data_num):
+def circle_gen(data_num):
+    '''
+    generate random data on a circle for trying testing worst case
+    '''
     # data_num = 20
     out = []
     angle = [random.uniform(0,1)*(np.pi*2) for i in range(data_num)]
@@ -175,11 +201,20 @@ def worst_case_plot(data_num):
     y = [ (np.sin(angle[i])+1)*PLANE_SIZE/2 for i in range(data_num)]
     x = np.asarray(x).astype(int)
     y = np.asarray(y).astype(int)
-    # plt.scatter(x.T, y, s=10) 
+    # plt.scatter(x.T, y, s=10)  # plot the generation
     out = np.stack((x, y), axis=-1)
-    print(out)
     return out.tolist()
 
+def line_gen(data_num):
+    '''
+    generate random data pt on a line for trying testing worst case
+    '''
+    x = np.linspace(0, PLANE_SIZE, data_num)
+    y = 1*x
+    out = np.stack((x, y), axis=-1).astype(int)
+  
+    # scatterplot(out) #plot the generation
+    return out.tolist()
 
 
 

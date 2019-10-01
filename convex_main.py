@@ -4,7 +4,8 @@ csc370 algorithm
 project 1
 sep 19. 2019
 
-different trails in brute force of convex problem
+different trails in improved brute force of convex hull problem
+dependency: convex_func.py
 '''
 from convex_func import *
 
@@ -13,11 +14,10 @@ def getConvexHull():
     @return: a list (without duplicates) of points in the convex hull – calls checkLineSegment()
     order of the points in the convex hull is not important
     '''
-    out = []
+    out = [] #the output result
     for i in range(len(points)):
         for j in range(i,len(points)):
             if(i != j):
-                # print("----",points[i],points[j])
                 if (checkLineSegment(i,j)):
                     out.append([points[i],points[j]])
     # print("num of edges: ",len(out))
@@ -30,22 +30,18 @@ def checkLineSegment(index1,index2):
     @return: True or False depending on whether the remaining points all lie on one side of the
     line through the two points;  Increments the global count for each point tested
     '''
-    global count
-    
-    a,b,c = findLine(index1,index2)
-    # count += 1 #check how many lines checked
+    global count 
+    a,b,c = findLine(index1,index2) #found the line equation
     #*-1 because findLine() returns the form of ax + by = c, but checked using y = -a/bx + c/b (b=1)   
     result1 = []
     result2 = []
     for pt in points:
         if(pt != points[index1] and pt != points[index2]):
             count += 1 #count how many times chekced which side of a line a point lies
-            result1.append(int(pt[1] > pt[0]*(-1*a)+c))
-            result2.append(int(pt[1] < pt[0]*(-1*a)+c))
-            # print("::",pt)
-            # print(result1,result2)
-            
-            #early stoppping...
+            result1.append(int(pt[1] > pt[0]*(-1*a)+c)) #see which side a pt's in
+            result2.append(int(pt[1] < pt[0]*(-1*a)+c)) #could just write an if else statement than computing it again
+
+            #early stoppping when criteria met...
             if sum(result1) != 0 and sum(result2) != 0: #if already found lines on both side
                 return False
 
@@ -83,6 +79,48 @@ def plot_graphs(result):
     scatterplot(points)
     plt.show() 
 
+def single_trail():
+    '''
+    single trail of the experiment mainly for plotting and debugging
+    '''
+    global points, count 
+    count = 0 
+    data_num = 5
+    # createData(data_num)
+    points = getData().tolist()
+    print(points)
+    result = getConvexHull() # run the core algorithm
+    print(result)
+    #plot the graphs
+    plot_graphs(result)
+
+def circle_trail():
+    '''
+    # single trail try to find worst case first in circle
+    '''
+    global points, count 
+    count = 0 
+    data_num = 20
+    points = circle_gen(data_num)
+    result = getConvexHull() # run the core algorithm
+    #plot the graphs
+    plot_graphs(result)
+    print(count)
+
+def line_trail():
+    '''
+    # single trail try to find worst case first proposed all pts in line
+    '''
+    global points, count 
+    count = 0 
+    data_num = 20
+    points = line_gen(40)
+    result = getConvexHull() # run the core algorithm
+    # #plot the graphs
+    # plot_graphs(result)
+    print(count)
+    # plt.show()
+
 
 def main():
     #repeated num for each trail
@@ -110,27 +148,9 @@ def main():
         print("overall count of checking: ", int(input_num*(input_num-1)*(input_num-2)/2)) 
         print("optimized count of checking mean: ", np.mean(count_list), "sd: ", np.std(count_list))
     
-    # #single trail
-    # global points, count 
-    # count = 0 
-    # data_num = 20
-    # createData(data_num)
-    # points = getData().tolist()
-    # result = getConvexHull() # run the core algorithm
-    # #plot the graphs
-    # plot_graphs(result)
-
-    # #single trail worst case 
-    # global points, count 
-    # count = 0 
-    # data_num = 20
-    # points = worst_case_plot(20)
-    # result = getConvexHull() # run the core algorithm
-    # #plot the graphs
-    # plot_graphs(result)
-    # print(count)
-
-    # plot_results()
+    # line_trail() #worst case attempt for arranging points as a line
+    # single_trail() #simply try the experiment one time
+    # plot_results() #plot the results of counts
     # plt.show()
     print("fin")
     
